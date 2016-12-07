@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "main": "index.js",
   "dependencies": {
-    "lodash": "^4.17.2"
+    "lodash": "^4.17.2",
+    "md5": "^2.2.1",
+    "randomstring": "^1.1.5"
   },
   "devDependencies": {},
   "author": "Dale Caffull <dcaffull@factset.com>"
