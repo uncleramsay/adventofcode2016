@@ -16,7 +16,7 @@ module.exports = {
       [],
     ];
     const controller = new Controller(floors);
-    controller.bfs();
+    console.log(controller.currentState.serialize());
     return '';
   },
   2: () => {

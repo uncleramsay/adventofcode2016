@@ -1,65 +1,43 @@
 const _ = require('lodash');
 const Elevator = require('./elevator');
+const Floor = require('./floor');
 
 module.exports = class State {
-  constructor(elevatorFloor, floors) {
+  constructor(elevatorFloor, floorContents) {
     this.elevator = new Elevator(elevatorFloor);
-    this.floors = floors;
+    this.floors = [
+      new Floor(0),
+      new Floor(1),
+      new Floor(2),
+      new Floor(3),
+    ];
+
+    for (let i = 0; i < floorContents.length; i++) {
+      _.each(floorContents[i], (item) => {
+        this.floors[i].addItem(item);
+      });
+    }
   }
 
-  isFinal() {
-    return this.floors[0].getContents().length === 0 &&
-           this.floors[1].getContents().length === 0 &&
-           this.floors[2].getContents().length === 0;
-  }
-
-  isValid() {
-    // todo
+  estimateDistance() {
+    return _.reduce(this.floors, (sum, floor, i) => {
+      const floorChance = floor.getContents().length * 0.25;
+      const distanceFromTop = this.floors.length - i - 1;
+      return sum + (floorChance * distanceFromTop);
+    }, 0);
   }
 
   getBranches() {
-    const elevatorFloor = this.elevator.getFloor();
-    const movableItems = this.floors[elevatorFloor].getContents();
-
     let branches = [];
-    if (elevatorFloor !== 3) {
-      const offset = 1;
-      for (let i = 0; i < movableItems.length; i++) {
-        const item1 = movableItems[i];
-        for (let j = i + 1; j < movableItems.length; j++) {
-          const item2 = movableItems[j];
-          branches.push(this.getBranch(offset, item1, item2));
-        }
-        branches.push(this.getBranch(offset, item1));
-      }
-    }
-    if (elevatorFloor !== 0) {
-      const offset = -1;
-      for (let i = 0; i < movableItems.length; i++) {
-        const item1 = movableItems[i];
-        for (let j = i + 1; j < movableItems.length; j++) {
-          const item2 = movableItems[j];
-          branches.push(this.getBranch(offset, item1, item2));
-        }
-        branches.push(this.getBranch(offset, item2));
+    const singleItems = _.clone(this.floors[this.elevator.getFloor()].getContents());
+    const doubleItems = [];
+    for (let i = 0; i < singleItems.length; i++) {
+      for (let j = i + 1; j < singleItems.length; j++) {
+        doubleItems.push([singleItems[i], singleItems[j]]);
       }
     }
 
-    return branches;
-  }
-
-  getBranch(offset, item1, item2) {
-    const elevatorFloor = this.elevator.getFloor();
-
-    let newFloors = _.cloneDeep(this.floors);
-    newFloors[elevatorFloor].removeItem(item1);
-    newFloors[elevatorFloor + offset].addItem(item1);
-    if (item2) {
-      newFloors[elevatorFloor].removeItem(item2);
-      newFloors[elevatorFloor + offset].addItem(item2);
-    }
-
-    return new State(elevatorFloor + offset, newFloors);
+    // todo
   }
 
   serialize() {
