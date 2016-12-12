@@ -1,45 +1,68 @@
 const _ = require('lodash');
+const Floor = require('./floor');
+const State = require('./state');
 
 module.exports = class Controller {
-  constructor() {
-  }
+  constructor(floorContents) {
+    let floors = [];
 
-  parseLocations(data) {
-    const lines = data.split('\n');
-    this.map = _.map(lines, (line) => {
-      const matches = line.match(/(generator|microchip)/g);
-      return matches ? matches.length : 0;
-    });
-  }
-
-  calculateMoves() {
-    let moves = 0;
-    let currentFloor = 0;
-    let finished = false;
-
-    while (!finished) {
-      if (this.map[currentFloor] === 2) {
-        // If there are only 2 on a floor, move both up
-        this.map[currentFloor] -= 2;
-        this.map[currentFloor + 1] += 2;
-        moves += 1;
-      } else if (this.map[currentFloor] >= 2) {
-        // If there are more than two on a floor, move just one up (takes two moves)
-        this.map[currentFloor] -= 1;
-        this.map[currentFloor + 1] += 1;
-        moves += 2;
-      } else if (currentFloor < 3) {
-        currentFloor += 1;
-      } else {
-        currentFloor = 0;
-      }
-
-      if (!this.map[0] && !this.map[1] && !this.map[2]) {
-        finished = true;
-      }
+    for (let i = 0; i < floorContents.length; i++) {
+      const floor = new Floor(i);
+      _.each(floorContents[i], (item) => {
+        floor.addItem(item);
+      });
+      floors.push(floor);
     }
 
-    return moves;
+    this.currentState = new State(0, floors);
+  }
+
+  bfs() {
+    const visitedStates = new Set();
+    const queue = [{
+      last: null,
+      current: this.currentState,
+    }];
+
+    let node;
+    let count = 0;
+    while(queue.length) {
+      node = queue.pop();
+
+      if (node.current.isFinal()) {
+        const steps = [];
+        while (node) {
+          steps.push(node.current);
+          node = node.last;
+        }
+
+        _.each(steps.reverse(), (step) => {
+          if (step) {
+            step.print();
+          }
+        });
+        return steps.length;
+      }
+
+      let branches = node.current.getBranches();
+      branches = _.filter(branches, (branch) => {
+        const serial = branch.serialize();
+        if (!visitedStates.has(serial) &&
+            branch.isValid()) {
+          visitedStates.add(serial);
+          return true;
+        }
+        return false;
+      });
+      _.each(branches, (branch) => {
+        queue.push({
+          last: node,
+          current: branch,
+        });
+      });
+
+      count += 1;
+    }
   }
 }
 
