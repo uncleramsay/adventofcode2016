@@ -16,7 +16,8 @@ module.exports = {
       [],
     ];
     const controller = new Controller(floors);
-    return controller.bfs();
+    controller.bfs();
+    return '';
   },
   2: () => {
   }

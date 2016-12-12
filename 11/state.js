@@ -14,26 +14,7 @@ module.exports = class State {
   }
 
   isValid() {
-    let valid = true;
-
-    _.each(this.floors, (floor) => {
-      const contents = floor.getContents();
-      const generators = _.filter(contents, (item) => {
-        return item[1] === 'G';
-      });
-      const microchips = _.filter(contents, (item) => {
-        return item[1] === 'M';
-      });
-
-      _.each(microchips, (microchip) => {
-        const element = microchip[0];
-        if (generators.length && generators.indexOf(element + 'G') === -1) {
-          valid = false;
-        }
-      });
-    });
-
-    return valid;
+    // todo
   }
 
   getBranches() {
@@ -60,7 +41,7 @@ module.exports = class State {
           const item2 = movableItems[j];
           branches.push(this.getBranch(offset, item1, item2));
         }
-        branches.push(this.getBranch(offset, item1));
+        branches.push(this.getBranch(offset, item2));
       }
     }
 
@@ -79,13 +60,6 @@ module.exports = class State {
     }
 
     return new State(elevatorFloor + offset, newFloors);
-  }
-
-  print() {
-    _.each(this.floors, (floor) => {
-      console.log(floor.getContents());
-    });
-    console.log();
   }
 
   serialize() {

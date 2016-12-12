@@ -18,50 +18,31 @@ module.exports = class Controller {
   }
 
   bfs() {
-    const visitedStates = new Set();
+    const visitedStates = {};
     const queue = [{
       last: null,
       current: this.currentState,
     }];
 
     let node;
-    let count = 0;
     while(queue.length) {
       node = queue.pop();
 
-      if (node.current.isFinal()) {
+      if (node.isFinal()) {
         const steps = [];
         while (node) {
           steps.push(node.current);
           node = node.last;
         }
-
-        _.each(steps.reverse(), (step) => {
-          if (step) {
-            step.print();
-          }
-        });
-        return steps.length;
+        return steps.reverse();
       }
 
-      let branches = node.current.getBranches();
+      let branches = state.getBranches();
       branches = _.filter(branches, (branch) => {
         const serial = branch.serialize();
-        if (!visitedStates.has(serial) &&
-            branch.isValid()) {
-          visitedStates.add(serial);
-          return true;
-        }
-        return false;
+        return !visitedStates[serial] &&
+               branch.isValid();
       });
-      _.each(branches, (branch) => {
-        queue.push({
-          last: node,
-          current: branch,
-        });
-      });
-
-      count += 1;
     }
   }
 }
