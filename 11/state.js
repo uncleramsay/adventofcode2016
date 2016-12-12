@@ -19,46 +19,32 @@ module.exports = class State {
     }
   }
 
-  estimateDistance() {
-    return _.reduce(this.floors, (sum, floor, i) => {
-      const floorChance = floor.getContents().length * 0.25;
-      const distanceFromTop = this.floors.length - i - 1;
-      return sum + (floorChance * distanceFromTop);
-    }, 0);
+  getElevator() {
+    return this.elevator;
   }
 
-  getBranches() {
-    let branches = [];
-    const singleItems = _.clone(this.floors[this.elevator.getFloor()].getContents());
-    const doubleItems = [];
-    for (let i = 0; i < singleItems.length; i++) {
-      for (let j = i + 1; j < singleItems.length; j++) {
-        doubleItems.push([singleItems[i], singleItems[j]]);
-      }
-    }
+  isValid() {
+    let rval = true;
 
-    // todo
+    _.some(this.floors, (floor) => {
+      const contents = floor.getContents().join(' ');
+
+
+
+      _.each (contents, (item) => {
+
+      });
+    });
   }
 
   serialize() {
-    const pairs = {};
+    let rval = '';
     _.each(this.floors, (floor) => {
-      _.each([...floor.getContents()], (item) => {
-        const initial = item[0];
-        if (!pairs[initial]) {
-          pairs[initial] = [];
-        }
-        pairs[initial].push(floor.getNumber());
-      });
+      rval += floor.serialize();
     });
+    rval += this.elevator.serialize();
 
-    // Key doesn't actually matter for reducing branches
-    let serializedPairs = [];
-    _.each(pairs, (values) => {
-      serializedPairs.push(values.join(''));
-    });
-
-    return serializedPairs.join('-') + `-${this.elevator.getFloor()}`;
+    return rval;
   }
 }
 

@@ -4,10 +4,6 @@ module.exports = class Floor {
     this.contents = new Set();
   }
 
-  getNumber() {
-    return this.number;
-  }
-
   getContents() {
     return this.contents;
   }
