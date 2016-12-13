@@ -70,8 +70,6 @@ module.exports = class PasswordCracker {
   }
 
   printStatus(count) {
-    console.log('\x1Bc');
-
     process.stdout.cursorTo(0, 0);
     process.stdout.clearLine();
 
@@ -88,5 +86,9 @@ module.exports = class PasswordCracker {
 
   printRegisters() {
     console.log(this.registers);
+  }
+
+  static clearScreen() {
+    console.log('\x1Bc');
   }
 }

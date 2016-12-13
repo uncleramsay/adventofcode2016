@@ -85,8 +85,6 @@ module.exports = class Screen {
   }
 
   displayScreen() {
-    console.log('\x1Bc');
-
     process.stdout.cursorTo(0, 0);
     process.stdout.clearLine();
 
