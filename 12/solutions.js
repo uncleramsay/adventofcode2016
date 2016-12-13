@@ -13,7 +13,6 @@ module.exports = {
       d: 0,
     });
     passwordCracker.parseInstructions(data);
-    passwordCracker.printStatus('all');
     return passwordCracker.getRegisters()['a'];
   },
   2: () => {
@@ -24,7 +23,6 @@ module.exports = {
       d: 0,
     });
     passwordCracker.parseInstructions(data);
-    passwordCracker.printStatus('all');
     return passwordCracker.getRegisters()['a'];
   }
 }

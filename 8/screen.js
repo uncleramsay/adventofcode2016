@@ -13,6 +13,8 @@ module.exports = class Screen {
   }
 
   followInstructions() {
+    Screen.clearScreen();
+
     for (const instruction of this.instructions) {
 
       if (/^rect/.test(instruction)) {
@@ -83,8 +85,6 @@ module.exports = class Screen {
   }
 
   displayScreen() {
-    console.log('\x1Bc');
-
     process.stdout.cursorTo(0, 0);
     process.stdout.clearLine();
 
@@ -109,5 +109,9 @@ module.exports = class Screen {
     }
 
     return count;
+  }
+
+  static clearScreen() {
+    console.log('\x1Bc');
   }
 }
