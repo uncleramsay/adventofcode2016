@@ -1,24 +1,17 @@
-console.time('Time Taken');
-
 const _ = require('lodash');
 const fs = require('fs');
 const MapMaker = require('./mapMaker');
 
+// const data = fs.readFileSync(`${__dirname}/data.txt`, 'utf8').trim();
 const favouriteNumber = 1352;
 
 const mapMaker = new MapMaker(favouriteNumber);
 
 module.exports = {
   1: () => {
-    const rval = mapMaker.navigateTo(31,39);
-
-    console.timeEnd('Time Taken');
-    return rval;
+    mapMaker.printMap(33,41);
+    return '';
   },
   2: () => {
-    const rval = mapMaker.navigateUntil(50);
-
-    console.timeEnd('Time Taken');
-    return rval;
   }
 }
