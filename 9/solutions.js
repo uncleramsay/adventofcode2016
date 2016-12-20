@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const _ = require('lodash');
 const fs = require('fs');
 const Decompresser = require('./decompresser');
@@ -10,9 +12,15 @@ decompresser.parseFile(data);
 module.exports = {
   1: () => {
     decompresser.decompressV1();
-    return decompresser.getCharCount();
+    const rval = decompresser.getCharCount();
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
-    return decompresser.getV2CharCount();
+    const rval = decompresser.getV2CharCount();
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }

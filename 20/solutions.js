@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const _ = require('lodash');
 const fs = require('fs');
 const IpValidator = require('./ipValidator');
@@ -9,9 +11,15 @@ ipValidator.parseBlacklist(data);
 
 module.exports = {
   1: () => {
-    return ipValidator.findLowestIp();
+    const rval = ipValidator.findLowestIp();
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
-    return ipValidator.findAllIps();
+    const rval = ipValidator.findAllIps();
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }

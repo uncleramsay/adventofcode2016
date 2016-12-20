@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const _ = require('lodash');
 const fs = require('fs');
 const Controller = require('./controller');
@@ -10,10 +12,16 @@ const controller = new Controller();
 module.exports = {
   1: () => {
     controller.parseLocations(data);
-    return controller.calculateMoves();
+    const rval = controller.calculateMoves();
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
     controller.parseLocations(data2);
-    return controller.calculateMoves();
+    const rval = controller.calculateMoves();
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }

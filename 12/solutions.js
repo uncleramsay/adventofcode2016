@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const _ = require('lodash');
 const fs = require('fs');
 const PasswordCracker = require('./passwordCracker');
@@ -13,7 +15,10 @@ module.exports = {
       d: 0,
     });
     passwordCracker.parseInstructions(data);
-    return passwordCracker.getRegisters()['a'];
+    const rval = passwordCracker.getRegisters()['a'];
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
     const passwordCracker = new PasswordCracker({
@@ -23,6 +28,9 @@ module.exports = {
       d: 0,
     });
     passwordCracker.parseInstructions(data);
-    return passwordCracker.getRegisters()['a'];
+    const rval = passwordCracker.getRegisters()['a'];
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }

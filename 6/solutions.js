@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const _ = require('lodash');
 const fs = require('fs');
 const SignalDecoder = require('./signalDecoder');
@@ -9,9 +11,15 @@ signalDecoder.parseSignal(data);
 
 module.exports = {
   1: () => {
-    return signalDecoder.getDecodedMessage();
+    const rval = signalDecoder.getDecodedMessage();
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
-    return signalDecoder.getModifiedDecodedMessage();
+    const rval = signalDecoder.getModifiedDecodedMessage();
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }

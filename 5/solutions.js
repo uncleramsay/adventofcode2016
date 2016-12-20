@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const fs = require('fs');
 const HashFinder = require('./hashFinder');
 
@@ -8,9 +10,15 @@ hashFinder.parseInput(data);
 
 module.exports = {
   1: () => {
-    return hashFinder.findPassword();
+    const rval = hashFinder.findPassword();
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
-    return hashFinder.findHarderPassword();
+    const rval = hashFinder.findHarderPassword();
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }

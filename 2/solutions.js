@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const fs = require('fs');
 const KeypadPresser = require('./keypadPresser');
 
@@ -20,7 +22,10 @@ module.exports = {
     const keypadPresser = new KeypadPresser(keys, currentKeyIndex);
     keypadPresser.parseInstructions(data);
     keypadPresser.followInstructions();
-    return keypadPresser.getKeysPressed();
+    const rval = keypadPresser.getKeysPressed();
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
 
@@ -40,6 +45,9 @@ module.exports = {
     const keypadPresser = new KeypadPresser(keys, currentKeyIndex);
     keypadPresser.parseInstructions(data);
     keypadPresser.followInstructions();
-    return keypadPresser.getKeysPressed();
+    const rval = keypadPresser.getKeysPressed();
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }

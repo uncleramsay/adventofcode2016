@@ -32,13 +32,19 @@ module.exports = class MapMaker {
   }
 
   navigateUntil(limit) {
+    let routes = 0;
     this.steps.push(new Step(1, 1, null));
 
     while (this.steps.length) {
       const step = this.steps.pop();
 
-      if (this.countSteps(step) === limit + 2) {
-        return this.steps.length - 2;
+      if (this.countSteps(step) === limit) {
+        routes += 1;
+      }
+
+      // Stop when we're likely to be done - there's probably a better stopping method than this...
+      if (this.countSteps(step) === limit * 2) {
+        return routes;
       }
 
       // Give up if we go out of range

@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const _ = require('lodash');
 const fs = require('fs');
 const Screen = require('./screen');
@@ -10,10 +12,15 @@ screen.followInstructions();
 
 module.exports = {
   1: () => {
-    return screen.countLights();
+    const rval = screen.countLights();
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
     screen.displayScreen();
+
+    console.timeEnd('Time Taken');
     return '';
   }
 }

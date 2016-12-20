@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const _ = require('lodash');
 const fs = require('fs');
 const KeyFinder = require('./keyFinder');
@@ -8,9 +10,15 @@ const keyFinder = new KeyFinder(data);
 
 module.exports = {
   1: () => {
-    return keyFinder.findLastKey(64, false);
+    const rval = keyFinder.findLastKey(64, false);
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
-    return keyFinder.findLastKey(64, true);
+    const rval = keyFinder.findLastKey(64, true);
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }

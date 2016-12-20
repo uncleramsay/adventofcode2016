@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const _ = require('lodash');
 const fs = require('fs');
 const IpAnalyser = require('./ipAnalyser');
@@ -9,9 +11,15 @@ ipAnalyser.parseIps(data);
 
 module.exports = {
   1: () => {
-    return ipAnalyser.countTlsIps();
+    const rval = ipAnalyser.countTlsIps();
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
-    return ipAnalyser.countSslIps();
+    const rval = ipAnalyser.countSslIps();
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }

@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const _ = require('lodash');
 const fs = require('fs');
 const BotController = require('./botController');
@@ -10,11 +12,16 @@ botController.parseInstructions(data);
 module.exports = {
   1: () => {
     botController.followInstructions(17, 61);
+
+    console.timeEnd('Time Taken');
     return '';
   },
   2: () => {
     botController.followInstructions();
     const outputs = botController.getOutputs();
-    return outputs[0] * outputs[1] * outputs[2];
+    const rval = outputs[0] * outputs[1] * outputs[2];
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }

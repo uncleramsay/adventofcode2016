@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const fs = require('fs');
 const TriangleSorter = require('./triangleSorter');
 
@@ -8,10 +10,16 @@ const triangleSorter = new TriangleSorter();
 module.exports = {
   1: () => {
     triangleSorter.parseSpecRows(data);
-    return triangleSorter.getValidTriangles().length;
+    const rval = triangleSorter.getValidTriangles().length;
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
     triangleSorter.parseSpecCols(data);
-    return triangleSorter.getValidTriangles().length;
+    const rval = triangleSorter.getValidTriangles().length;
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }

@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const _ = require('lodash');
 const fs = require('fs');
 const RoomDecrypter = require('./roomDecrypter');
@@ -9,7 +11,10 @@ roomDecrypter.parseNames(data);
 
 module.exports = {
   1: () => {
-    return roomDecrypter.getValidRoomsSectorIdSum();
+    const rval = roomDecrypter.getValidRoomsSectorIdSum();
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
     let sectorId = 0;
@@ -20,6 +25,7 @@ module.exports = {
       }
     });
 
+    console.timeEnd('Time Taken');
     return sectorId;
   }
 }

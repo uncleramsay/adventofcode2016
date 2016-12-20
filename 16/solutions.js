@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const _ = require('lodash');
 const fs = require('fs');
 const DataFiller = require('./dataFiller');
@@ -8,11 +10,17 @@ module.exports = {
   1: () => {
     const dataFiller = new DataFiller(272);
     dataFiller.fillDisk(data);
-    return dataFiller.getChecksum();
+    const rval = dataFiller.getChecksum();
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
     const dataFiller = new DataFiller(35651584);
     dataFiller.fillDisk(data);
-    return dataFiller.getChecksum();
+    const rval = dataFiller.getChecksum();
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }

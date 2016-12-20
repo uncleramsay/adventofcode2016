@@ -1,3 +1,5 @@
+console.time('Time Taken');
+
 const _ = require('lodash');
 const fs = require('fs');
 const Sculpture = require('./sculpture');
@@ -12,10 +14,16 @@ const timer = new Timer(sculpture);
 module.exports = {
   1: () => {
     sculpture.parseBlueprint(data);
-    return timer.findFirstStartTime();
+    const rval = timer.findFirstStartTime();
+
+    console.timeEnd('Time Taken');
+    return rval;
   },
   2: () => {
     sculpture.parseBlueprint(data2);
-    return timer.findFirstStartTime();
+    const rval = timer.findFirstStartTime();
+
+    console.timeEnd('Time Taken');
+    return rval;
   }
 }
